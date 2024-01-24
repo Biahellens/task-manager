@@ -2,41 +2,34 @@
 <template>
   <div class="boxStatusTasks" @mouseover="hover = true" @mouseleave="hover = false">
     <div v-for="status in statusCounts" :key="status.status" class="box">
-      <img
-        v-if="statusCounts && status.text === 'pending'"
-        class="imgStatus"
-        alt="progress-task"
-        src="../assets/progress-task.svg"
-      />
-      <img
-        v-if="status && status.text === 'finished'"
-        class="imgStatus"
-        alt="completed-task"
-        src="../assets/completed-task.svg"
-      />
-      <p class="textStatus">
-        {{ status && status.text === 'pending' ? 'Em Progresso' : 'Concluído' }}
-      </p>
-      <p class="numberStatus">{{ status.count }}</p>
+      <div v-if="status.text === 'pending'">
+        <img class="imgStatus" alt="progress-task" src="../assets/progress-task.svg" />
+        <p v-if="status.text === 'pending'" class="textStatus">
+          Em Progresso
+        </p>
+        <p v-if="status.text === 'pending'" class="numberStatus">{{ status.count }}</p>
+      </div>
+      <div v-if="status.text === 'finished'">
+        <img class="imgStatus" alt="completed-task" src="../assets/completed-task.svg" />
+        <p v-if="status.text === 'finished'" class="textStatus">
+          Concluído
+        </p>
+        <p v-if="status.text === 'finished'" class="numberStatus">{{ status.count }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue } from 'vue-class-component';
+import { ref } from 'vue';
 // eslint-disable-next-line import/extensions
 import { useBoxStatusStore } from '../store/modules/boxStatusStore';
 
 export default class boxStatusTasks extends Vue {
+  hover = ref(false);
+
   private boxStatusStore = useBoxStatusStore();
-
-  private get hover() {
-    return this.boxStatusStore.hover;
-  }
-
-  private set hover(value: boolean) {
-    this.boxStatusStore.hover = value;
-  }
 
   private get statusCounts() {
     return this.boxStatusStore.taskStatusCounts;
@@ -117,4 +110,3 @@ export default class boxStatusTasks extends Vue {
   }
 }
 </style>
-../store/modules/modules/boxStatusStore

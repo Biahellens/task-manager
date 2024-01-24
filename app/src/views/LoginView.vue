@@ -26,8 +26,8 @@
           />
         </form>
         <transition name="fade">
-          <div v-if="showErrorMessage" class="errorNotification">
-            {{ showErrorMessage }}
+          <div v-if="this.authStore.showErrorMessage" class="errorNotification">
+            {{ this.authStore.showErrorMessage }}
           </div>
         </transition>
         <div class="button-loginContent">
@@ -48,19 +48,18 @@
 
 <script lang="ts">
 import { Vue } from 'vue-class-component';
+import { ref } from 'vue';
 // eslint-disable-next-line import/extensions
 import { pinia } from '../store/index';
 // eslint-disable-next-line import/extensions
 import { useAuthStore } from '../store/modules/auth';
 
 export default class loginView extends Vue {
+  hover = ref(false);
+
   private pinia = pinia;
 
   private authStore = useAuthStore();
-
-  private get hover() {
-    return this.authStore.hover;
-  }
 
   private get email() {
     return this.authStore.email;

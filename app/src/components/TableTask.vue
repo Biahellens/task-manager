@@ -29,7 +29,7 @@
           <td class="buttonsChange-content">
             <button
               class="buttonsChange"
-              v-if="task.status === 'pending'"
+              v-if="task.status === 'pending' && typeof finishTask === 'function'"
               @click="finishTask(task.id)"
             >
               <img class="buttonsChange-img" alt="check" src="../assets/check-change.svg" />
@@ -89,6 +89,14 @@ export default class tabletask extends Vue {
 
   async toggleSortingOrder() {
     this.sortingOrder = this.sortingOrder === 'asc' ? 'desc' : 'asc';
+  }
+
+  async finishTask(taskId: number) {
+    this.tableTaskStore.finishTask(taskId);
+  }
+
+  async deleteTask(taskId: number) {
+    this.tableTaskStore.deleteTask(taskId);
   }
 }
 </script>
@@ -215,4 +223,3 @@ td {
   }
 }
 </style>
-../store/modules/modules/tableTaskStore

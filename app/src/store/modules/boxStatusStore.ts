@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineStore } from 'pinia';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
 
 interface TaskStatus {
@@ -11,11 +9,10 @@ interface TaskStatus {
 // eslint-disable-next-line import/prefer-default-export
 export const useBoxStatusStore = defineStore('boxStatus', {
   state: () => ({
-    hover: false,
     taskStatusCounts: [] as TaskStatus[],
+    hoveredStatus: '',
   }),
   actions: {
-
     async getTasksStatus() {
       function getCookie(name: string) {
         // eslint-disable-next-line prefer-template
@@ -41,9 +38,19 @@ export const useBoxStatusStore = defineStore('boxStatus', {
           text: status,
           count: response.data.statusCounts[status],
         }));
+
+        console.log(response.data.statusCounts);
       } catch (error) {
         console.error('Erro ao buscar status das tarefas:', error);
       }
+    },
+
+    setHoveredStatus(status: string) {
+      this.hoveredStatus = status;
+    },
+
+    clearHoveredStatus() {
+      this.hoveredStatus = '';
     },
   },
 });

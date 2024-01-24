@@ -60,7 +60,7 @@ export const useModalStore = defineStore('modal', {
         }, 2000);
       } catch (error) {
         console.error('Erro ao criar tarefa:', error);
-        this.error = `${error}`;
+        this.error = 'Já existe uma tarefa com essa descrição';
       }
     },
   },

@@ -26,8 +26,8 @@
           />
         </form>
         <transition name="fade">
-          <div v-if="showErrorMessageCreatedAccount" class="errorNotification">
-            {{ showErrorMessageCreatedAccount }}
+          <div v-if="this.authStore.showErrorMessageCreatedAccount" class="errorNotification">
+            {{ this.authStore.showErrorMessageCreatedAccount }}
           </div>
         </transition>
         <div class="button-createdAccountContent">
@@ -48,19 +48,18 @@
 
 <script lang="ts">
 import { Vue } from 'vue-class-component';
+import { ref } from 'vue';
 // eslint-disable-next-line import/extensions
 import { pinia } from '../store/index';
 // eslint-disable-next-line import/extensions
 import { useAuthStore } from '../store/modules/auth';
 
 export default class createdAccountView extends Vue {
+  hover = ref(false);
+
   private pinia = pinia;
 
   private authStore = useAuthStore();
-
-  private get hover() {
-    return this.authStore.hover;
-  }
 
   private get email() {
     return this.authStore.email;
@@ -80,6 +79,7 @@ export default class createdAccountView extends Vue {
 
   private createdAccount() {
     this.authStore.createdAccount(this.$router);
+    console.log('showErrorMessageCreatedAccount in component:', this.authStore.showErrorMessageCreatedAccount);
   }
 }
 </script>
@@ -232,4 +232,3 @@ export default class createdAccountView extends Vue {
   opacity: 0;
 }
 </style>
-../store/modules/auth ../store/modules/modules/auth

@@ -7,12 +7,12 @@ import { RouteLocationRaw, Router } from 'vue-router';
 // eslint-disable-next-line import/prefer-default-export
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    hover: false,
     email: '',
     password: '',
     showErrorMessage: '',
     showErrorMessageCreatedAccount: '',
   }),
+
   actions: {
     login(router: Router) {
       const loginData = {
@@ -26,14 +26,14 @@ export const useAuthStore = defineStore('auth', {
         document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
       }
 
-      axios.post('http://localhost:3000/users/login', loginData).then((response) => {
+      axios.post('http://localhost:3000/user/login', loginData).then((response) => {
         // eslint-disable-next-line prefer-destructuring
         const token = response.data.token;
         setCookie('token', token, 7);
         router.push('/tasks' as RouteLocationRaw);
       }).catch((error) => {
         console.error('Erro no login:', error);
-        this.showErrorMessage = `${error.response.data.message}`;
+        this.showErrorMessage = 'Erro ao realizar login';
       });
     },
     createdAccount(router: Router) {
@@ -43,12 +43,12 @@ export const useAuthStore = defineStore('auth', {
       };
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      axios.post('http://localhost:3000/users/createdAccount', accountData).then((response) => {
+      axios.post('http://localhost:3000/user/createdAccount', accountData).then((response) => {
         // eslint-disable-next-line prefer-destructuring
         router.push('/login' as RouteLocationRaw);
-      }).catch((error) => {
-        console.error('Erro ao criar conta:', error);
-        this.showErrorMessageCreatedAccount = `${error.response.data.message}`;
+      }).catch(() => {
+        this.showErrorMessageCreatedAccount = 'Erro ao criar uma conta';
+        console.log('Erro ao criar uma conta:', this.showErrorMessageCreatedAccount);
       });
     },
   },

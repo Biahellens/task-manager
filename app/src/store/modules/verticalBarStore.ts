@@ -30,7 +30,7 @@ export const useVerticalBarStore = defineStore('verticalBar', {
         return;
       }
 
-      axios.post('http://localhost:3000/users/logout', null, {
+      axios.post('http://localhost:3000/user/logout', null, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
